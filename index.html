@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Javascript Task</title>
+</head>
+<body>
+<h1>Javascript Task</h1>
+<hr>
+<!-- Task-1: Date Function -->
+<h3>Task-1: Date Function</h3>
+<div>
+  <button onclick="getCurrentTime();" class="current-time">Get current date and time</button><br>
+  <h4>Result: </h4>
+  Sample Output : Today is :<b><label id="current-date-display"></label></b><br>
+  Current time is : <b><label id="current-time-display"></label></b>
+</div>
+<hr>
+<!-- Task-2: String Function -->
+<h3>Task-2: String Function</h3>
+<div>
+	<label>Enter the Text here : </label>	<input type="text" id="textbox"><br>
+	<label>Enter the number for which position to presented character you want to remove :</label><input type="number" id="remove_position">
+	<button onclick="stringRemove();">Click Here</button>	
+	<h4>Result: </h4>
+	<b><label id="remove_text_position_result"></label></b>
+</div>
+<hr>
+<!-- Task-3: String Function -->
+<h3>Task-3: Find vowels count from the string</h3>
+<div>
+	<label>Enter the Text here : </label>	<input type="text" id="vowelstext">
+	<button id="vowelsbutton">Click Here</button>	
+	<h4>Result: </h4>
+	<b><label id="vowelscount"></label></b>
+</div>
+<hr>
+<!-- Task-4: String Function -->
+<h3>Task-4: Remove duplicates character from the string</h3>
+<div>
+	<label>Enter the Text here : </label>	<input type="text" class="uniquetext">
+	<button class="uniquebutton">Click Here</button>	
+	<h4>Result: </h4>
+	<b><label id="uniquetextvalue"></label></b>
+</div>
+<hr>
+<!-- Task-5: Array parallel value sum -->
+<h3>Task-5: Compute the sum of each individual index value from the given arrays</h3>
+<div>
+	<label>
+	array1 = [1,5,6,9,1,10,0,0];
+	array2 = [5,8,4,2,0,1,10,0]; </label>
+	<h4>Result: </h4>
+	<b><label id="arraysumvalue"></label></b>
+</div>    
+  </body>
+
+<script type="text/javascript">
+	/* 1.Display the current day and time in the following format
+	*  Sample Output : Today is : Friday. 
+	*  Current time is : 4 PM : 50 : 22 
+	*/
+	function getCurrentTime(){
+		var date_value = new Date();
+		var current_time = date_value.getHours();
+		var current_minutes = date_value.getMinutes();
+		var current_seconds = date_value.getSeconds();
+		var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+		if(current_time == 0){
+			current_time = 12;
+		}
+		var date_result = ((current_time > 12) ? (current_time - 12) : current_time);
+		var noon = ((current_time >= 12) ? " PM" : " AM");
+		current_minutes = ((current_minutes < 10) ? ":0" : " : ")+current_minutes;
+		current_seconds = ((current_seconds < 10) ? ":0" : " : ")+current_seconds;
+		date_result = date_result + noon + current_minutes + current_seconds;
+
+		document.getElementById("current-date-display").innerHTML = days[date_value.getDay()];
+		document.getElementById("current-time-display").innerHTML = date_result;
+	}
+
+	/*
+	*  2.Remove a character at the specified position of a given string and return the new string.
+	*/
+
+	function stringRemove(){
+		var content = document.getElementById("textbox").value;
+		var remove_position = document.getElementById("remove_position").value;
+		if(content.length > 0){
+			var stringlength = content.length;
+			//  substr paremeter first one is starting position second one is length of the string
+			var startingtext1 =  content.substr(0, eval(remove_position-1));
+			//  substr paremeter first one is starting position second one is ending position of the string
+			var startingtext2 =  content.substring(remove_position, stringlength);
+			var stringResult = startingtext1 + startingtext2;
+			
+		}else{
+			stringResult = "Please enter text";
+		}
+		document.getElementById("remove_text_position_result").innerHTML = stringResult;
+	}
+	/*
+	*  3.function that accepts a string as a parameter and counts the number of vowels within the string
+	*  Example string : 'The quick brown fox' 
+ 	*  Expected Output : 5
+	*/
+	//var el = documentfragment.querySelector(".myclass");
+	document.getElementById("vowelsbutton").addEventListener("click", function(){
+		var vowels = ['a', 'e', 'i' ,'o', 'u'];
+	    var vowelstextbox_value = document.getElementById("vowelstext").value;
+	    var givenTextArray = Array.from(vowelstextbox_value);
+	    var vowelscount = 0;
+	    for (var i = 0; i <= givenTextArray.length; i++) {
+	    	if(vowels.includes(givenTextArray[i])){ 
+	    		vowelscount+=1;
+	    	}
+	    }
+	    document.getElementById("vowelscount").innerHTML = vowelscount;
+	});
+
+	/*
+		4.function to extract unique characters from a string
+		Example string : "thequickbrownfoxjumpsoverthelazydog"
+		Expected Output : "thequickbrownfxjmpsvlazydg"
+	*/
+	document.body.querySelector(".uniquebutton").addEventListener("click", function(){
+		var vowelstextbox_value = document.body.querySelector(".uniquetext").value;
+		var uniquetextarray = [];
+		console.log(vowelstextbox_value);
+
+		for (var i = 0; i <= vowelstextbox_value.length; i++) {
+			if(!(uniquetextarray.includes(vowelstextbox_value[i]))){
+				uniquetextarray.push(vowelstextbox_value[i]);
+			}
+
+		}
+		var finaluniqueresult = uniquetextarray.join('');
+		document.getElementById("uniquetextvalue").innerHTML = finaluniqueresult;
+	});
+
+	/*5.Two arrays with individual values, write a JavaScript program to compute the sum of each individual index value from the given arrays
+	Example:
+	array1 = [1,0,2,3,4];
+	array2 = [3,5,6,7,8,13];
+	*/
+
+	var sumarray1 = [1,5,6,9,1,10,0,0];
+	var sumarray2 = [5,8,4,2,0,1,10,0];
+	var resultarray = [];
+	for (var i = 0;i <= sumarray1.length-1; i++) {
+		resultarray.push(eval(sumarray1[i] + sumarray2[i]));
+	}
+	document.getElementById("arraysumvalue").innerHTML = resultarray;
+	
+
+</script>
+
+</html>
